@@ -44,17 +44,11 @@ class Box
     }
 
     public Box() {
-        length = -1;
-        width = -1;
-        height = -1;
-        color = "Blue";
+        this(-1);
     }
 
     public Box(int a) {
-        length = a;
-        width = a;
-        height = a;
-        color = "Blue";
+        this(a,a,a,"Blue");
     }
 
 
@@ -73,8 +67,8 @@ class Point {
     double x, y;
 
     Point(double x, double y) {
-        x = x;
-        y = y;
+        this.x = x;
+        this.y = y;
     }
 
     Point(double p) {
@@ -100,6 +94,27 @@ Point bigPoint() {
         return new Point(x * 4, y * 4);
     }
 
+    Point MoveRight(Point o) {
+        o.x++;
+        return this;
+    }
+
+    Point MoveLeft(Point o) {
+        o.x--;
+        return this;
+    }
+
+    Point MoveUp(Point o) {
+        o.y++;
+        return this;
+    }
+
+    Point MoveDown(Point o) {
+        o.y--;
+        return this;
+    }
+
+    
 
     boolean sameLine(Point p) {
         if (x * p.y == y * p.x) return true;
@@ -135,8 +150,8 @@ class Vector {
     Point end;
 
     Vector(Point start, Point end) {
-        start = start;
-        end = end;
+        this.start = start;
+        this.end = end;
     }
 
 void printVector() {
