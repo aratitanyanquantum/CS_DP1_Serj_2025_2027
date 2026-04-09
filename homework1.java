@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.Random;
     
 
 
@@ -26,6 +26,102 @@ class Student {
         System.out.println(name + " " + lastName);
     }
 
+}
+
+class UniversalArray {
+    private int size;
+    private int[] arrayUniv;
+
+public UniversalArray(int size) {
+        this.size = size;
+        this.arrayUniv = new int[size];
+    }
+    public void initArray() {
+        Random rand = new Random();
+        for (int i = 0; i < size; i++) {
+            arrayUniv[i] = rand.nextInt(20) + 1;
+        }
+    }
+
+    
+    public void printArray() {
+        for (int i = 0; i < size; i++) {
+            System.out.print(arrayUniv[i] + " ");
+        }
+        System.out.println();
+    }
+
+public int min() {
+        int min = arrayUniv[0];
+        for (int i = 1; i < size; i++) {
+            if (arrayUniv[i] < min) {
+                min = arrayUniv[i];
+            }
+        }
+        return min;
+    }
+
+    public int max() {
+        int max = arrayUniv[0];
+        for (int i = 1; i < size; i++) {
+            if (arrayUniv[i] > max) {
+                max = arrayUniv[i];
+            }
+        }
+        return max;
+    }
+
+public int amenashat() {
+    int max = 0;
+    int result = arrayUniv[0];
+
+    for (int i = 0; i < size; i++) {
+        int count = 0;
+
+        for (int j = 0; j < size; j++) {
+            if (arrayUniv[i] == arrayUniv[j]) {
+                count++;
+            }
+        }
+
+        if (count > max) {
+            max = count;
+            result = arrayUniv[i];
+        }
+    }
+
+    return result;
+}
+
+    public boolean Palindrome() {
+    for (int i = 0; i < size; i++) {
+        if (arrayUniv[i] != arrayUniv[size - 1 - i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+public boolean ka(int value) {
+    for (int i = 0; i < size; i++) {
+        if (arrayUniv[i] == value) {
+            return true;
+        }
+    }
+    return false;
+}
+
+public void bubble() {
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = 0; j < size - i - 1; j++) {
+            if (arrayUniv[j] > arrayUniv[j + 1]) {
+                int temp = arrayUniv[j];
+                arrayUniv[j] = arrayUniv[j + 1];
+                arrayUniv[j + 1] = temp;
+            }
+        }
+    }
+}
 }
 
 
@@ -114,7 +210,7 @@ Point bigPoint() {
         return this;
     }
 
-    
+
 
     boolean sameLine(Point p) {
         if (x * p.y == y * p.x) return true;
@@ -126,11 +222,41 @@ Point bigPoint() {
         else return false;
     }
 
+    static boolean sameLine(Point a, Point b, Point c) {
+        if( (b.x - a.x) * (c.y - a.y) == (b.y - a.y) * (c.x - a.x)) return true;
+        else return false;
+    }
+
+    static boolean sameLine(Point a, Point b) {
+        if (a.x * b.y == a.y * b.x) return true;
+        else return false;
+    }
+
+    boolean isTriangle(Point a, Point b) {
+        if( (b.x - x) * (a.y - y) != (b.y - y) * (a.x - x)) return true;
+        else return false;
+    }
 
     static double triangleArea(Point a, Point b, Point c) {
         return Math.abs((a.x * (b.y - c.y)) +(b.x * (c.y - a.y)) + (c.x * (a.y - b.y))) / 2.0;
     }
 
+
+    static int MaxSameLine(Point[] points) {
+        int maxCount = 0;
+        for (int i = 0; i < points.length; i++) {
+            int count = 1;
+            for (int j = 0; j < points.length; j++) {
+                if (i != j && sameLine(points[i], points[j])) {
+                    count++;
+                }
+            }
+            if (count > maxCount) {
+                maxCount = count;
+            }
+        }
+        return maxCount;
+    }
 Point midPoint(Point o) {
         return new Point((x + o.x) / 2, (y + o.y) / 2);
     }
@@ -199,6 +325,23 @@ public class homework1 {
 
     public static void main(String[] args) {
 
+UniversalArray array1 = new UniversalArray(8);
+
+        array1.initArray();
+        array1.printArray();
+
+        System.out.println(array1.Palindrome());
+
+        array1.bubble();
+        array1.printArray();
+
+        System.out.println(array1.ka(5));
+
+        System.out.println(array1.amenashat());
+
+    }
+
+        /* 
         Point point1 = new Point(2, 3);
         Point point2 = new Point(4, 6);
         Point point3 = new Point(5);
@@ -290,7 +433,6 @@ public class homework1 {
                 sum+=students[i].lastCSThreeGrades[j];
             }
             System.out.println("Average grade for " + students[i].name + " " + students[i].lastName + " is " + sum/3);
-        }
+        }*/
     }
 
-}
