@@ -1,6 +1,52 @@
-import java.util.Scanner;
-    
+import java.util.Random;
 
+class Stack {
+    private int top;
+    private int[] arrayStack;
+    static public int count=0;
+
+    public Stack(int top){
+        this.top = 0;
+        this.arrayStack = new int[1];
+        this.arrayStack[0]=top;
+    }
+
+    public boolean Stack_Empty() {
+        if (this.top==0) return true;
+        else return false;
+    }
+
+    public void push(int x){
+        if(!isFull()){
+        this.top++;
+        this.arrayStack[this.top]=x;}
+    }
+
+    public int pop(){
+        if(!Stack_Empty()){
+        this.top--;
+        this.arrayStack[this.top+1] = 0;
+        return this.arrayStack[this.top];}
+        else {System.out.println("Stack is empty");
+        return -Integer.MAX_VALUE;
+        }
+    }
+
+    public boolean isFull() {
+        return this.top + 1 >= this.arrayStack.length;
+    }
+
+    public int peak(){
+        return this.arrayStack[this.top];
+    }
+
+    public void printStack()
+    {
+        for(int i=0;i<this.arrayStack.length;i++){
+            System.out.print(this.arrayStack[i] + " ");
+        }
+    }
+}
 
 class Student {
     int ID;
@@ -26,6 +72,104 @@ class Student {
         System.out.println(name + " " + lastName);
     }
 
+}
+
+class UniversalArray {
+    private int size;
+    private int[] arrayUniv;
+
+    public UniversalArray(int size) {
+        this.size = size;
+        this.arrayUniv = new int[size];
+    }
+    public void initArray() {
+        Random rand = new Random();
+        for (int i = 0; i < size; i++) {
+            arrayUniv[i] = rand.nextInt(20) + 1;
+        }
+    }
+
+
+    public void printArray() {
+        for (int i = 0; i < size; i++) {
+            System.out.print(arrayUniv[i] + " ");
+        }
+        System.out.println();
+    }
+
+    public int min() {
+        int min = arrayUniv[0];
+        for (int i = 1; i < size; i++) {
+            if (arrayUniv[i] < min) {
+                min = arrayUniv[i];
+            }
+        }
+        return min;
+    }
+
+    public int max() {
+        int max = arrayUniv[0];
+        for (int i = 1; i < size; i++) {
+            if (arrayUniv[i] > max) {
+                max = arrayUniv[i];
+            }
+        }
+        return max;
+    }
+
+    public int amenashat() {
+        int max = 0;
+        int result = arrayUniv[0];
+
+        for (int i = 0; i < size; i++) {
+            int count = 0;
+
+            for (int j = 0; j < size; j++) {
+                if (arrayUniv[i] == arrayUniv[j]) {
+                    count++;
+                }
+            }
+
+            if (count > max) {
+                max = count;
+                result = arrayUniv[i];
+            }
+        }
+
+        return result;
+    }
+
+    public boolean Palindrome() {
+        for (int i = 0; i < size; i++) {
+            if (arrayUniv[i] != arrayUniv[size - 1 - i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean ka(int value) {
+        for (int i = 0; i < size; i++) {
+            if (arrayUniv[i] == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    public void bubble() {
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (arrayUniv[j] > arrayUniv[j + 1]) {
+                    int temp = arrayUniv[j];
+                    arrayUniv[j] = arrayUniv[j + 1];
+                    arrayUniv[j + 1] = temp;
+                }
+            }
+        }
+    }
 }
 
 
@@ -59,8 +203,8 @@ class Box
     public double surfaceArea() {
         return 2 * (length * width + length * height + width * height);
     }
-} 
-    
+}
+
 
 
 class Point {
@@ -84,13 +228,14 @@ class Point {
         else if (x < 0 && y > 0) System.out.println("II quarter");
         else if (x < 0 && y < 0) System.out.println("III quarter");
         else if (x > 0 && y < 0) System.out.println("IV quarter");
+        else System.out.println("on the axes");
     }
 
-double distancePoint(Point d) {
+    double distancePoint(Point d) {
         return Math.sqrt((x - d.x)*(x - d.x) + (y - d.y)*(y - d.y));
     }
 
-Point bigPoint() {
+    Point bigPoint() {
         return new Point(x * 4, y * 4);
     }
 
@@ -114,7 +259,7 @@ Point bigPoint() {
         return this;
     }
 
-    
+
 
     boolean sameLine(Point p) {
         if (x * p.y == y * p.x) return true;
@@ -126,12 +271,42 @@ Point bigPoint() {
         else return false;
     }
 
+    static boolean sameLine(Point a, Point b, Point c) {
+        if( (b.x - a.x) * (c.y - a.y) == (b.y - a.y) * (c.x - a.x)) return true;
+        else return false;
+    }
+
+    static boolean sameLine(Point a, Point b) {
+        if (a.x * b.y == a.y * b.x) return true;
+        else return false;
+    }
+
+    boolean isTriangle(Point a, Point b) {
+        if( (b.x - x) * (a.y - y) != (b.y - y) * (a.x - x)) return true;
+        else return false;
+    }
 
     static double triangleArea(Point a, Point b, Point c) {
         return Math.abs((a.x * (b.y - c.y)) +(b.x * (c.y - a.y)) + (c.x * (a.y - b.y))) / 2.0;
     }
 
-Point midPoint(Point o) {
+
+    static int MaxSameLine(Point[] points) {
+        int maxCount = 0;
+        for (int i = 0; i < points.length; i++) {
+            int count = 1;
+            for (int j = 0; j < points.length; j++) {
+                if (i != j && sameLine(points[i], points[j])) {
+                    count++;
+                }
+            }
+            if (count > maxCount) {
+                maxCount = count;
+            }
+        }
+        return maxCount;
+    }
+    Point midPoint(Point o) {
         return new Point((x + o.x) / 2, (y + o.y) / 2);
     }
 
@@ -154,7 +329,7 @@ class Vector {
         this.end = end;
     }
 
-void printVector() {
+    void printVector() {
         System.out.print("Vector is ");
         start.printPoint();
         System.out.print(", ");
@@ -177,11 +352,11 @@ void printVector() {
         return dx() * v.dy() == dy() * v.dx();
     }
 
-double prod(Vector v) {
+    double prod(Vector v) {
         return this.dx() * v.dx() + this.dy() * v.dy();
     }
 
-Vector add(Vector v) {
+    Vector add(Vector v) {
         double newX = this.dx() + v.dx();
         double newY = this.dy() + v.dy();
 
@@ -199,6 +374,51 @@ public class homework1 {
 
     public static void main(String[] args) {
 
+        Stack s1 = new Stack(15);
+        s1.push(55);
+        s1.push(-1);
+        s1.printStack();
+        s1.isFull();
+        s1.Stack_Empty();
+        s1.pop();
+        s1.peak();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+        UniversalArray array1 = new UniversalArray(8);
+
+        array1.initArray();
+        array1.printArray();
+
+        System.out.println(array1.Palindrome());
+
+        array1.bubble();
+        array1.printArray();
+
+        System.out.println(array1.ka(5));
+
+        System.out.println(array1);*/
+
+    }
+
+        /* 
         Point point1 = new Point(2, 3);
         Point point2 = new Point(4, 6);
         Point point3 = new Point(5);
@@ -290,7 +510,5 @@ public class homework1 {
                 sum+=students[i].lastCSThreeGrades[j];
             }
             System.out.println("Average grade for " + students[i].name + " " + students[i].lastName + " is " + sum/3);
-        }
-    }
-
+        }*/
 }
